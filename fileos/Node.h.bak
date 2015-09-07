@@ -1,0 +1,61 @@
+#ifndef NODE_H
+#define NODE_H
+//文件结构
+struct File{
+  unsigned int uid;// user id
+  unsigned int pid;//dir id
+  unsigned int id;
+  bool rw;//read or write
+  bool flag;//true is protected false is not
+  char name[15];
+};
+//目录项结构
+struct DirItem{
+  unsigned int id;
+  unsigned int addr;
+};
+//文件夹结构
+struct Dir{
+  unsigned int uid;//user id
+  unsigned int pid;//parent dir id
+  unsigned int id;//itself id
+  char name[15];//dir name
+  int num;
+  DirItem diritem[1280];//文件最多1280个。
+};
+//超级块结构,磁盘大小1MB,磁盘块1024个，一个磁盘块1kb。
+struct Sys{
+  char name[16];
+  char dir;
+  unsigned int diskSize;
+  unsigned int blockSize;
+  unsigned int blockNum;
+};
+//磁盘块结构，设定1024个磁盘块，一个磁盘块1kb
+struct DiskSpace{
+  bool disk[1024];
+};
+//i节点结构,1024个i节点
+struct Inode{
+  unsigned int id;
+  char name[15];
+  bool use;
+  bool type;//false is dir ,true is file
+  bool rw;//read or write
+  bool flag;//true is protected false is not
+  int block[10];
+};
+/*
+
+inode num 1024
+disksize = 1024*(1024+64+1+1)
+blockSize = 1024;
+blocknum = 1024;
+inode num =1024
+inode size =64;
+inode has 64 block
+sys has 1 block
+blocktable has
+*/
+
+#endif
